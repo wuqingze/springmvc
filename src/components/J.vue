@@ -4,6 +4,9 @@
         <!-- <button v-on:click="getdata">get data from server from different domain</button>     -->
         <!-- <button v-on:click="attributemodel">test annotation AttributeModel</button>                                                             -->
         <button v-on:click="json">json test</button>
+        <!-- <button v-on:click="requestHeader">request header</button> -->
+
+        <!-- <button v-on:click="responsebody">responsebody message convert</button> -->
     </div>    
     
 </template>
@@ -20,7 +23,7 @@ export default {
         getdata: function(){
             const vm = this
             $.ajax({
-                url: 'http://localhost:8080/user/login',
+                url: 'http://localhost:8192/user/login',
                 success: function(data){
                     // alert(data)
                     vm.data = data
@@ -35,10 +38,10 @@ export default {
             })
         },
         attributemodel: function(){
-            alert("attributemodel")
+            alert("attributemodel") 
             const vm = this
             $.ajax({
-                url: 'http://localhost:8080/user/attributemodel',
+                url: 'http://localhost:8192/user/attributemodel',
                 data:{
                     "abc": "this is abc from wuqingze"
                 },
@@ -50,15 +53,36 @@ export default {
         json: function(){
             const vm = this
             $.ajax({
-                url: 'http://localhost:8080/user/json',
-              
-                data:{
+                url: 'http://localhost:8192/user/json',
+                type: "post",  
+	            async: true,  
+	            dataType: "json", 
+	            contentType: "application/json; charset=utf-8",
+                contentType: "application/json",
+                data:JSON.stringify({
                     bookId:1,
-                    name: "spring mvc企业实战应用"
-                },
-                async: true,
+                    name: "springmvc",
+                    number: 10
+                }),
+                // xhrFields:{withCredentials:true},
+                success: function(res){
+                    alert(JSON.stringify(res))
+                }
+            })
+        },
+        requestHeader: function(){
+            $.ajax({
+                url: "http://localhost:8192/user/requestHeader",
                 success: function(res){
                     alert(res)
+                }
+            })
+        },
+        responsebody: function(){
+            $.ajax({
+                url: "http://localhost:8192/user/responsebody",
+                success: function(res){
+                    alert(JSON.stringify(res))
                 }
             })
         }
